@@ -1,0 +1,8 @@
+.sc-hover:hover{
+
+scale: 1.08;
+
+}
+.sc-hover{
+    transition: all .5s;
+}

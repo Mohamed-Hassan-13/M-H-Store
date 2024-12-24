@@ -1,0 +1,39 @@
+@import "~react-image-gallery/styles/css/image-gallery.css";
+
+*{
+  box-sizing: border-box;
+}
+body {
+  font-family: "Lato", sans-serif !important;
+}
+
+.pointer{
+  cursor: pointer;
+}
+.low-shadow{
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.08);
+}
+.great-vibes-regular {
+  font-family: "Great Vibes", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.scrool-primary::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.scrool-primary::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+.scrool-primary::-webkit-scrollbar-thumb {
+  background-color: #0d6dfdd3;
+  border-radius: 5px;
+}
+
+.scrool-primary::-webkit-scrollbar-thumb:hover {
+  background-color: #0d6efd;
+}

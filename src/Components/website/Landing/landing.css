@@ -1,0 +1,19 @@
+.hand{
+    background-image: url(../../../Assets/pixlr-image-generator-6aa82f22-7caa-4ebe-9b34-6deb54605c4a.png);
+    height: 82.5vh;
+    background-position: right;
+    background-size: cover;
+}
+
+form .form-control:focus {
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.354);
+    border:0 ;
+}
+
+
+@media (min-width: 992px) {
+    .w-80{
+        width:80%   
+    }
+}
+

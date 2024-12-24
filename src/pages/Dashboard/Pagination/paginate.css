@@ -1,0 +1,16 @@
+.custom-pagination{
+    list-style: none;
+    padding: 0 ;
+}
+.pagination-tag-anchor{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    transition: all .3s;
+}
+
+.pagination-tag-anchor:hover{
+    background-color: rgba(36, 35, 35, 0.221);
+}

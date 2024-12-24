@@ -1,0 +1,73 @@
+.form{
+    background-image:linear-gradient(110deg , white 50% , transparent 50%) , url("../form.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 30rem;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+}
+.form-custem{
+    margin-bottom: 20px;
+    position: relative;
+    margin-top: 15px;
+}
+
+
+.custem-form{
+width: 50%;
+}
+.form-custem label , input{
+    display: block;
+}
+.form-custem input{
+    padding: 20px;
+    outline: none;
+    border-radius: 3px;
+    border: none;
+    background-color: white;
+    width: 80%;
+    border-bottom: 3px solid transparent;
+    font-family: "Lato", sans-serif;
+    box-shadow: 0 0 10px rgba(128, 128, 128, 0.692) inset;
+}
+.form-custem input:focus{
+    box-shadow: 0 0 10px rgba(128, 128, 128, 0.692) inset;
+}
+.form-custem input:focus:valid{
+    border-bottom: 3px solid green;
+}
+.form-custem input:focus:not(:valid){
+    border-bottom: 3px solid orangered;
+}
+
+.form-custem input:placeholder-shown + label{
+    top: 20px;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.form-custem label{
+    position: absolute;
+    top: -20px;
+    left: 0;
+    font-size: 14px;
+    font-weight: bold;
+    color: gray;
+    transition: all .2s;
+}
+
+
+@media (max-width: 992px) {
+    .form .form-custem input{
+      width: 100%;
+    }
+  .form .custem-form{
+    width: 100%;
+    }
+    .error{
+      width: 100%;
+    }
+  }
