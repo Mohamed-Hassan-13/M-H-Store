@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Axios } from "../../../Api/Axios";
-import { CAT, CATE, PROD } from "../../../Api/Api";
+import { BaseUrl, CAT, CATE, PROD } from "../../../Api/Api";
 import Loading from "../../../Components/Loading/loading";
 
 export default function AddCategory() {

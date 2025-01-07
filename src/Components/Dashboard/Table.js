@@ -75,7 +75,10 @@ export default function Tableshow(props) {
                 <img
                   key={ind}
                   style={{ width: "40px", height: "100%" }}
-                  src={img.image}
+                  src={
+                    "https://m-h-store-backend-production.up.railway.app" +
+                    img.image
+                  }
                 />
               ))}
             </div>

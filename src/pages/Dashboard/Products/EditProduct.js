@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Loading from "../../../Components/Loading/loading";
 import { Axios } from "../../../Api/Axios";
-import { CAT, PROD } from "../../../Api/Api";
+import { BaseUrl, CAT, PROD } from "../../../Api/Api";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -144,7 +144,12 @@ export default function EditProduct() {
         className="d-flex justify-content-between align-items-center"
       >
         <div className="d-flex justify-content-start gap-2">
-          <img style={{ width: "80px", height: "100%" }} src={img.image} />
+          <img
+            style={{ width: "80px", height: "100%" }}
+            src={
+              "https://m-h-store-backend-production.up.railway.app" + img.image
+            }
+          />
         </div>
         <div style={{ position: "absolute", right: "0px", top: "-10px" }}>
           <Button
@@ -158,6 +163,7 @@ export default function EditProduct() {
       </div>
     </div>
   ));
+
   // _____________________________________________
   let showNewimages = images.map((img, index) => (
     <div className="border p-2 w-100">

@@ -49,10 +49,6 @@ export default function Products() {
       name: "Price",
       key: "price",
     },
-    // {
-    //   name: "Rating",
-    //   key: "rating",
-    // },
   ];
 
   return (

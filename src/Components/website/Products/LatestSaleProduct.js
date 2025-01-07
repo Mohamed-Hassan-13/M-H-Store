@@ -16,13 +16,12 @@ export default function LatestSale() {
       .then((res) => setproducts(res.data))
       .finally(() => setloading(false));
   }, []);
-
   let ShowData = products.map((item, index) => (
     <Product
       key={index}
       title={item.title}
       description={item.description}
-      image={item.images[0].image}
+      image={item?.images[0]?.image}
       rating={item.rating}
       sale
       price={item.price}

@@ -22,7 +22,7 @@ export default function TopRated() {
       key={index}
       title={item.title}
       description={item.description}
-      image={item.images[0].image}
+      image={item?.images[0]?.image}
       rating={item.rating}
       sale
       price={item.price}
