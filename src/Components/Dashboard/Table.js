@@ -80,8 +80,13 @@ export default function Tableshow(props) {
               ))}
             </div>
           ) : item2.key === "image" ? (
-            "https://m-h-store-backend-production.up.railway.app" +
-            <img style={{ width: "40px", height: "25px" }} src={item.image} />
+            <img
+              style={{ width: "40px", height: "25px" }}
+              src={
+                "https://m-h-store-backend-production.up.railway.app" +
+                item.image
+              }
+            />
           ) : item2.key === "created_at" ? (
             TransformDate(item.created_at)
           ) : item2.key === "updated_at" ? (
