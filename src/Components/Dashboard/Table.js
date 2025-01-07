@@ -84,7 +84,7 @@ export default function Tableshow(props) {
               style={{ width: "40px", height: "25px" }}
               src={
                 "https://m-h-store-backend-production.up.railway.app" +
-                item.image
+                item[item2.key]
               }
             />
           ) : item2.key === "created_at" ? (
