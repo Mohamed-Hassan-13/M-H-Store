@@ -79,7 +79,10 @@ export default function NavScroll() {
         </div>
         <div className="col-sm-4 col-12">
           <img
-            src={item.images[0].image}
+            src={
+              "https://m-h-store-backend-production.up.railway.app" +
+              item.images[0].image
+            }
             alt=""
             className="rounded-2"
             style={{ height: "80px", objectFit: "cover" }}

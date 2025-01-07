@@ -37,8 +37,12 @@ export default function ProductOnePage() {
         setproductImages(
           res.data[0].images.map((img) => {
             return {
-              original: img.image,
-              thumbnail: img.image,
+              original:
+                "https://m-h-store-backend-production.up.railway.app" +
+                img.image,
+              thumbnail:
+                "https://m-h-store-backend-production.up.railway.app" +
+                img.image,
             };
           })
         );

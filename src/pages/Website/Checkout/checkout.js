@@ -55,7 +55,10 @@ export default function Checkout() {
           >
             <div className="d-flex row-gap-2 gap-2 align-items-center col-md-3 col-6">
               <img
-                src={item.images[0].image}
+                src={
+                  "https://m-h-store-backend-production.up.railway.app" +
+                  item?.images[0]?.image
+                }
                 alt=""
                 width={"50px"}
                 height={"50px"}
