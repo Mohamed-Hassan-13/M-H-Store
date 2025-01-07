@@ -34,7 +34,14 @@ export default function Product(props) {
               SALE
             </p>
           )}
-          <img src={props.image} className="img-fluid " alt="" />
+          <img
+            src={
+              "https://m-h-store-backend-production.up.railway.app" +
+              props.image
+            }
+            className="img-fluid "
+            alt=""
+          />
         </div>
         <div className="d-flex justify-content-between align-items-center border-top pt-2">
           <div className="d-flex flex-column gap-1">
