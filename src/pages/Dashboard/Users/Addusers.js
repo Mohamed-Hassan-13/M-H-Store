@@ -9,11 +9,12 @@ export default function AddUser() {
   const [password, setpassword] = useState("");
   const [role, setrole] = useState("");
 
-       // Ref
-       let foucs = useRef(null)
+  // Ref
+  let foucs = useRef(null);
 
-       useEffect(()=>{
-       foucs.current.focus()})
+  useEffect(() => {
+    foucs.current.focus();
+  }, []);
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -25,7 +26,7 @@ export default function AddUser() {
         role: role,
       });
       console.log(res);
-      
+
       window.location.pathname = "/dashboard/users";
     } catch (err) {
       console.log(err);
@@ -77,17 +78,17 @@ export default function AddUser() {
           className="mb-3"
           controlId="formBasicRole"
         >
-          <option disabled  value="">
+          <option disabled value="">
             Select Role
           </option>
           <option value="1995">Admin</option>
           <option value="2001">User</option>
-          <option value="1996">ًWriter</option>
+          <option value="1999">Product Manger</option>
         </Form.Select>
         <Button
           variant="primary"
           type="submit"
-          disabled={ role != '' ? false :true}
+          disabled={role != "" ? false : true}
         >
           Add User
         </Button>

@@ -1,4 +1,4 @@
-export let BaseUrl = "http://127.0.0.1:8000/api";
+export let BaseUrl = "https://m-h-store-backend-production.up.railway.app/api";
 export let REGISTER = "register";
 export let LOGIN = "login";
 export let LOGOUT = "logout";
