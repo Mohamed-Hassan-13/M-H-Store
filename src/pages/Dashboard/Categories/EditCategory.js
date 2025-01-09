@@ -68,19 +68,14 @@ export default function EditCategory() {
           <Form.Label>Image</Form.Label>
           <Form.Control
             required
-            onChange={(e) => setimage(e.target.files.item(0))}
+            // onChange={(e) => setimage(e.target.files.item(0))}
             type="file"
             placeholder="image"
           />
         </Form.Group>
         <div className="mb-3">
           <img
-            src={
-              typeof image === "object"
-                ? "https://m-h-store-backend-production.up.railway.app" +
-                  URL.createObjectURL(image)
-                : image
-            }
+            src={"https://m-h-store-backend-production.up.railway.app" + image}
             alt=""
             style={{
               width: "80px",
