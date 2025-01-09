@@ -55,7 +55,10 @@ function App() {
           <Route path="/register" element={<Register />} />
         </Route>
         <Route path="/" element={<Home />} />
-        <Route path="/auth/google/callback" element={<GoogleCallBack />} />
+        <Route
+          path="https://m-h-store-backend-production.up.railway.app/auth/google/callback"
+          element={<GoogleCallBack />}
+        />
         {/* Prodacted Route */}
         <Route path="/*" element={<Error404 />} />
         <Route element={<RequireAuth allowedRole={["1995", "1996", "1999"]} />}>
