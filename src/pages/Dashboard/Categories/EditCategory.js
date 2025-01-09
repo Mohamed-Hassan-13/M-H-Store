@@ -79,7 +79,7 @@ export default function EditCategory() {
               typeof image === "object"
                 ? "https://m-h-store-backend-production.up.railway.app" +
                   URL.createObjectURL(image)
-                : "https://m-h-store-backend-production.up.railway.app" + image
+                : image
             }
             alt=""
             style={{
