@@ -8,52 +8,50 @@ import Loading from "../../../Components/Loading/loading";
 export default function EditCategory() {
   const [title, settitle] = useState("");
   const [image, setimage] = useState("");
-  const [loading , setloading]=useState()
-  const [disabled , setdisabled]=useState(true)
-  const [showimage , setshowimage]=useState("")
-  
-  
+  const [loading, setloading] = useState();
+  const [disabled, setdisabled] = useState(true);
+  const [showimage, setshowimage] = useState("");
 
-  let {id} = useParams();
+  let { id } = useParams();
 
   // Navigate
-  let navigate= useNavigate()
+  let navigate = useNavigate();
 
-  useEffect(()=>{
-    setloading(true)
-       Axios.get(`/${CATE}/${id}`).then((data)=>{
-        settitle(data.data.title)
-        setimage(data.data.image)
-        setloading(false)
-        
-    }
-    ).then(()=>setdisabled(false))
-    .catch(()=>navigate('/dashboard/categores/page/404',{replace:true}))
-  },[])
+  useEffect(() => {
+    setloading(true);
+    Axios.get(`/${CATE}/${id}`)
+      .then((data) => {
+        settitle(data.data.title);
+        setimage(data.data.image);
+        setloading(false);
+      })
+      .then(() => setdisabled(false))
+      .catch(() =>
+        navigate("/dashboard/categores/page/404", { replace: true })
+      );
+  }, []);
 
-  async function handlesubmit(e){    
+  async function handlesubmit(e) {
     e.preventDefault();
-    const form =new FormData()
-    form.append("title",title)
-    form.append("image",image)
-    
-    setloading(true)
-try{
-let ress  = await Axios.post(`${CATE}/edit/${id}`,form)
-  navigate('/dashboard/categores')
-  setloading(false)
-}
-catch(err){
-  console.log(err);
-  setloading(false)
-  
-}
-}
+    const form = new FormData();
+    form.append("title", title);
+    form.append("image", image);
+
+    setloading(true);
+    try {
+      let ress = await Axios.post(`${CATE}/edit/${id}`, form);
+      navigate("/dashboard/categores");
+      setloading(false);
+    } catch (err) {
+      console.log(err);
+      setloading(false);
+    }
+  }
 
   return (
     <div className="w-100 p-2">
-        {loading && <Loading/>}
-      <h1>Add Category</h1>
+      {loading && <Loading />}
+      <h1>Edit Category</h1>
       <Form onSubmit={handlesubmit}>
         <Form.Group className="mb-3" controlId="formBasicName">
           <Form.Label>Title</Form.Label>
@@ -76,18 +74,23 @@ catch(err){
           />
         </Form.Group>
         <div className="mb-3">
-        <img src={typeof(image)==="object" ? URL.createObjectURL(image) : image} alt="" style={{
-            width:'80px',
-            height:'50px'
-        }} />
+          <img
+            src={
+              typeof image === "object"
+                ? "https://m-h-store-backend-production.up.railway.app" +
+                  URL.createObjectURL(image)
+                : "https://m-h-store-backend-production.up.railway.app" + image
+            }
+            alt=""
+            style={{
+              width: "80px",
+              height: "50px",
+            }}
+          />
         </div>
-        <Button
-          variant="primary"
-          type="submit"
-          disabled={disabled}
-        >
+        <Button variant="primary" type="submit" disabled={disabled}>
           Save
-        </Button >
+        </Button>
       </Form>
     </div>
   );

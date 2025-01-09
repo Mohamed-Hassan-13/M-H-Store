@@ -66,7 +66,7 @@ export default function Tableshow(props) {
   // Show Data (tr)
   let showdata = switchData.map((item, index) => (
     <tr key={index}>
-      <td>{item.id}</td>
+      <td>{index + 1}</td>
       {props.header.map((item2, index) => (
         <td key={index}>
           {item2.key === "images" ? (

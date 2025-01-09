@@ -100,7 +100,11 @@ export default function Login() {
                 Log in
               </Button>
               <div className="btn-google mt-3">
-                <a href={"http://127.0.0.1:8000/login-google"}>
+                <a
+                  href={
+                    "https://m-h-store-backend-production.up.railway.app/login-google"
+                  }
+                >
                   <div className="google-icon-wrarber">
                     <img
                       className="google-icon"

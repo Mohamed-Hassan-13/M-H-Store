@@ -118,7 +118,9 @@ export default function Register() {
               I Already Have Been Acount <Link to={"/login"}>Login</Link>
             </p>
             <div className="btn-google">
-              <a href={`http://127.0.0.1:8000/login-google`}>
+              <a
+                href={`https://m-h-store-backend-production.up.railway.app/login-google`}
+              >
                 <div className="google-icon-wrarber">
                   <img
                     className="google-icon"

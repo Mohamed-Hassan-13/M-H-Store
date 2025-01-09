@@ -18,7 +18,9 @@ export default function WebsiteCategories() {
     <div key={index} className="col-lg-2 col-md-3 col-sm-6 col-12">
       <div className="d-flex justify-content-start align-items-center bg-white p-2 gap-3 rounded-2">
         <img
-          src={item.image}
+          src={
+            "https://m-h-store-backend-production.up.railway.app" + item.image
+          }
           alt="image"
           width={"50px"}
           height={"40px"}
