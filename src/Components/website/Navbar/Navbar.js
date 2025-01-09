@@ -270,13 +270,14 @@ const NavbarTest = () => {
           )}
         </button>
       </nav>
-      {user.role === "1995" ||
-        ("1999" && (
-          <Link to="/dashboard" className="admin-dashboard-btn">
-            <FontAwesomeIcon icon={faTachometerAlt} className="icon" />
-            Dashboard
-          </Link>
-        ))}
+      {tooken &&
+        (user.role === "1995" ||
+          ("1999" && (
+            <Link to="/dashboard" className="admin-dashboard-btn">
+              <FontAwesomeIcon icon={faTachometerAlt} className="icon" />
+              Dashboard
+            </Link>
+          )))}
     </>
   );
 };
