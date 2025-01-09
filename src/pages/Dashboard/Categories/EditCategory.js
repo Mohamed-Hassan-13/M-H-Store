@@ -22,7 +22,10 @@ export default function EditCategory() {
     Axios.get(`/${CATE}/${id}`)
       .then((data) => {
         settitle(data.data.title);
-        setimage(data.data.image);
+        setimage(
+          "https://m-h-store-backend-production.up.railway.app" +
+            data.data.image
+        );
         setloading(false);
       })
       .then(() => setdisabled(false))
@@ -68,14 +71,17 @@ export default function EditCategory() {
           <Form.Label>Image</Form.Label>
           <Form.Control
             required
-            // onChange={(e) => setimage(e.target.files.item(0))}
+            onChange={(e) => {
+              setimage(e.target.files[0]);
+              setshowimage(URL.createObjectURL(e.target.files[0]));
+            }}
             type="file"
             placeholder="image"
           />
         </Form.Group>
         <div className="mb-3">
           <img
-            src={"https://m-h-store-backend-production.up.railway.app" + image}
+            src={showimage === "" ? image : showimage}
             alt=""
             style={{
               width: "80px",
