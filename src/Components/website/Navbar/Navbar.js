@@ -1,33 +1,57 @@
-import { useContext, useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import { Link, useNavigate } from "react-router-dom";
-import { BaseUrl, CAT, LOGOUT, USER } from "../../../Api/Api";
-import { Axios } from "../../../Api/Axios";
-import SliceCategoryTitle2 from "../../../Helpers/SliceCategoryTitle";
-import SkeletonFun from "../../../Skeleton/Skeleton";
-import { Dropdown, Modal } from "react-bootstrap";
-import { Cart } from "../../../Context/GetDataCartContext";
+import React, { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBars,
+  faTimes,
+  faShoppingCart,
+  faUser,
+  faTachometerAlt,
+} from "@fortawesome/free-solid-svg-icons";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import PlusMinus from "../../btns/plusMinus";
+
+import "./Navbar.css";
 import Cookie from "cookie-universal";
+import { Axios } from "../../../Api/Axios";
+import { BaseUrl, LOGOUT, USER } from "../../../Api/Api";
+import { Cart } from "../../../Context/GetDataCartContext";
+import PlusMinus from "../../btns/plusMinus";
+import { Button, Modal } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import TransformDate from "../../../Helpers/TransformDate";
 
-export default function NavScroll() {
-  let [categories, setcategories] = useState([]);
-  let [loading, setloading] = useState(true);
+const NavbarTest = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   let [products, setproducts] = useState([]);
-  const [show, setShow] = useState(false);
   const [count, setcount] = useState();
-  // Context
-  const { GetDataCart, setGetDataCart } = useContext(Cart);
+  const [show, setShow] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [loading, setloading] = useState(true);
+
+  const toggleProfile = () => {
+    setIsProfileOpen(!isProfileOpen);
+  };
+
+  // إغلاق القائمة عند الضغط خارجها
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        !event.target.closest(".profile-dropdown") &&
+        !event.target.closest(".profile-icon")
+      ) {
+        setIsProfileOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
   // Cookies
   const cookie = Cookie();
   const tooken = cookie.get("ecoomerce");
+
+  // Context
+  const { GetDataCart, setGetDataCart } = useContext(Cart);
 
   // Logout
   function handleLogout() {
@@ -35,12 +59,29 @@ export default function NavScroll() {
     cookie.remove("ecoomerce");
     window.location.pathname = "/";
   }
+  // Plus & Minus on Cart
+  function ChangeCount(id, btnCount) {
+    const allproducts = JSON.parse(localStorage.getItem("product")) || [];
+    let FindID = allproducts.find((pro) => pro.id === id);
+    FindID.count = btnCount;
+    localStorage.setItem("product", JSON.stringify(allproducts));
+    setGetDataCart((prev) => !prev);
+  }
+  // Delete Product From Cart
+  function DeleteProductFromCart(item) {
+    const index = products.findIndex((pro) => pro.id === item.id);
+    products.splice(index, 1);
+    localStorage.setItem("product", JSON.stringify(products));
+    setGetDataCart((prev) => !prev);
+  }
+
   // Get User
   let [user, setuser] = useState("");
   useEffect(() => {
     Axios.get(`/${USER}`)
       .then((data) => setuser(data.data))
-      .catch((err) => setuser("You are not registered"));
+      .catch((err) => setuser("You are not registered"))
+      .finally(() => setloading(false));
   }, []);
 
   const Navigate = useNavigate();
@@ -54,16 +95,16 @@ export default function NavScroll() {
       Navigate("/login", { replace: true });
     }
   }
-
-  useEffect(() => {
-    Axios.get(`${CAT}`)
-      .then((res) => setcategories(res.data.slice(0, 8)))
-      .finally(() => setloading(false));
-  }, []);
+  // Get Data Cart
   useEffect(() => {
     const allproducts = JSON.parse(localStorage.getItem("product")) || [];
     setproducts(allproducts);
   }, [GetDataCart]);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   let ShowProductOnCart = products.map((item, index) => (
     <div
       key={index}
@@ -114,28 +155,6 @@ export default function NavScroll() {
       </div>
     </div>
   ));
-
-  // Delete Product From Cart
-  function DeleteProductFromCart(item) {
-    const index = products.findIndex((pro) => pro.id === item.id);
-    products.splice(index, 1);
-    localStorage.setItem("product", JSON.stringify(products));
-    setGetDataCart((prev) => !prev);
-  }
-  // Plus & Minus on Cart
-  function ChangeCount(id, btnCount) {
-    const allproducts = JSON.parse(localStorage.getItem("product")) || [];
-    let FindID = allproducts.find((pro) => pro.id === id);
-    FindID.count = btnCount;
-    localStorage.setItem("product", JSON.stringify(allproducts));
-    setGetDataCart((prev) => !prev);
-  }
-
-  let ShowDataCategories = categories.map((cate, index) => (
-    <Link key={index} to={"/category"} className="mb-0  hover">
-      {SliceCategoryTitle2(cate.title, 10)}
-    </Link>
-  ));
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   return (
@@ -154,12 +173,10 @@ export default function NavScroll() {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Navbar
-        expand="lg"
-        className="bg-body-white low-shadow d-flex flex-column"
-      >
-        <Container>
-          <Navbar.Brand href="#">
+      <nav className="custom-navbar">
+        <div className="navbar-left">
+          <div className="navbar-logo">
+            {" "}
             <Link to={"/"}>
               <img
                 src={require("../../../Assets/Blue_and_White_Circle_Retail_Logo-removebg-preview.png")}
@@ -167,126 +184,101 @@ export default function NavScroll() {
                 width={"150px"}
               />
             </Link>
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbarScroll" />
-          <Navbar.Collapse id="navbarScroll">
-            <div className="d-flex w-100 align-items-center flex-wrap row-gap-2">
-              <Nav
-                className=" my-2 my-lg-0 col-lg-6 col-12 "
-                style={{ maxHeight: "100px" }}
-                navbarScroll
-              >
-                <Form className=" d-flex ms-lg-3 ms-0 w-100 bg-primary ">
-                  <Form.Control
-                    type="search"
-                    placeholder="Search Product"
-                    className="py-2 w-100 rounded-0 "
-                    aria-label="Search"
-                  />
-                  <Button className="rounded-0" variant="primary">
-                    Search
-                  </Button>
-                </Form>
-              </Nav>
-              <div className="d-flex align-items-center gap-3 justify-content-center col-lg-3 col-sm-6 col-12">
-                <div onClick={handleShow}>
-                  <img
-                    className="pointer"
-                    width={"30px"}
-                    src={require("../../../Assets/shopping-cart.png")}
-                    alt=""
-                  />
-                </div>
-
-                <Dropdown>
-                  <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                    <img
-                      className="pointer"
-                      width={"30px"}
-                      src={require("../../../Assets/user.png")}
-                      alt=""
-                    />
-                  </Dropdown.Toggle>
-
-                  <Dropdown.Menu>
-                    {tooken ? (
-                      <>
-                        <div className="d-flex justify-content-center text-primary">
-                          <h5>
-                            {user.role === "1995"
-                              ? "Admin"
-                              : user.role === "1999"
-                              ? "Product Manger"
-                              : "User"}
-                          </h5>
-                        </div>
-                        <div className="px-2">
-                          <div>
-                            <span className="text-primary">Name:</span>{" "}
-                            <span>{user.name}</span>
-                          </div>
-                          <div>
-                            <span className="text-primary">Email:</span>{" "}
-                            <span>{user.email}</span>
-                          </div>
-                          <div>
-                            <span className="text-primary">Created At:</span>{" "}
-                            <span> {TransformDate(user.created_at)}</span>
-                          </div>
-                        </div>
-                      </>
-                    ) : (
-                      <div className="d-flex justify-content-center align-items-center">
-                        {user}
-                      </div>
-                    )}
-                  </Dropdown.Menu>
-                </Dropdown>
-              </div>
-              <div className="col-lg-3  col-sm-6 col-12 justify-content-center d-flex ">
-                {!tooken ? (
-                  <div className="d-flex align-items-center gap-2">
-                    <Link className="btn btn-primary fs-5 " to={"/login"}>
-                      Login
-                    </Link>
-                    <Link className="btn btn-primary fs-5 " to={"/register"}>
-                      Register
-                    </Link>
-                  </div>
-                ) : (
-                  <div className="d-flex gap-2">
-                    <div
-                      onClick={handleLogout}
-                      className="btn btn-danger fs-5 "
-                    >
-                      Logout
-                    </div>
-                    {user.role !== "2001" && (
-                      <Link className="btn btn-primary fs-5 " to={"/dashboard"}>
-                        Dashboard
-                      </Link>
-                    )}
-                  </div>
-                )}
-              </div>
-            </div>
-          </Navbar.Collapse>
-        </Container>
-        <Container>
-          <div className="d-flex align-items-center column-gap-4 justify-content-start flex-wrap w-100 ">
-            {loading ? (
-              <>
-                <SkeletonFun classs={""} count={8} height="15px" width="40px" />
-              </>
-            ) : (
-              ShowDataCategories
-            )}
-            <Link className="hover" to={"/category"}>
-              Show All...
-            </Link>
           </div>
-        </Container>
-      </Navbar>
+        </div>
+        <div className={`navbar-links ${isMenuOpen ? "open" : ""}`}>
+          <a href="/">Home</a>
+          <a href="/">Shop</a>
+          <a href="/">About</a>
+          <a href="/">Contact</a>
+        </div>
+        <div className="navbar-right">
+          {/* الأيقونات */}
+          <div className="navbar-icons">
+            <p className="mb-0 pointer" onClick={handleShow}>
+              <FontAwesomeIcon icon={faShoppingCart} className="icon" />
+              <span>({products.length})</span>
+            </p>
+            <div className="profile-container">
+              <FontAwesomeIcon
+                icon={faUser}
+                className="icon profile-icon"
+                onClick={toggleProfile}
+              />
+              {/* القائمة المنبثقة */}
+              {isProfileOpen ? (
+                tooken ? (
+                  loading ? (
+                    <div className="profile-dropdown">
+                      <p>Loading....</p>
+                    </div>
+                  ) : (
+                    <div className="profile-dropdown">
+                      <h5>
+                        {user.role === "1995"
+                          ? "Admin"
+                          : user.role === "1999"
+                          ? "Product Manger"
+                          : "User"}
+                      </h5>
+                      <p>
+                        <span className="text-primary me-1">Name:</span>
+                        {user.name}
+                      </p>
+                      <p>
+                        <span className="text-primary me-1">Email:</span>
+                        {user.email}
+                      </p>
+                      <p>
+                        <span className="text-primary me-1">Created At:</span>
+                        {TransformDate(user.created_at)}
+                      </p>
+                      <span className="logout" onClick={handleLogout}>
+                        Logout
+                      </span>
+                    </div>
+                  )
+                ) : (
+                  <div className="profile-dropdown">
+                    <p>{user}</p>
+                  </div>
+                )
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
+          {/* روابط تسجيل الدخول والتسجيل تظهر في الشاشات الكبيرة فقط */}
+          <div className="navbar-auth">
+            {!tooken && (
+              <>
+                <a href="/login" className="auth-link">
+                  Login
+                </a>
+                <a href="/register" className="auth-link">
+                  Register
+                </a>
+              </>
+            )}
+          </div>
+        </div>
+        <button className="menu-toggle" onClick={toggleMenu}>
+          {isMenuOpen ? (
+            <FontAwesomeIcon icon={faTimes} />
+          ) : (
+            <FontAwesomeIcon icon={faBars} />
+          )}
+        </button>
+      </nav>
+      {user.role === "1995" ||
+        ("1999" && (
+          <Link to="/dashboard" className="admin-dashboard-btn">
+            <FontAwesomeIcon icon={faTachometerAlt} className="icon" />
+            Dashboard
+          </Link>
+        ))}
     </>
   );
-}
+};
+
+export default NavbarTest;

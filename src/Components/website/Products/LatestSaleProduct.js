@@ -16,6 +16,8 @@ export default function LatestSale() {
       .then((res) => setproducts(res.data))
       .finally(() => setloading(false));
   }, []);
+  console.log(products);
+
   let ShowData = products.map((item, index) => (
     <Product
       key={index}
