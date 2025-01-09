@@ -77,7 +77,8 @@ export default function EditCategory() {
           <img
             src={
               typeof image === "object"
-                ? URL.createObjectURL(image)
+                ? "https://m-h-store-backend-production.up.railway.app" +
+                  URL.createObjectURL(image)
                 : "https://m-h-store-backend-production.up.railway.app" + image
             }
             alt=""
