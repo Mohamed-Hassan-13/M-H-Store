@@ -157,6 +157,7 @@ const NavbarTest = () => {
   ));
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
   return (
     <>
       <Modal show={show} onHide={handleClose}>
@@ -270,15 +271,14 @@ const NavbarTest = () => {
           )}
         </button>
       </nav>
-      {tooken &&
-        (user.role === "1995" || "1999" ? (
-          <Link to="/dashboard" className="admin-dashboard-btn">
-            <FontAwesomeIcon icon={faTachometerAlt} className="icon" />
-            Dashboard
-          </Link>
-        ) : (
-          ""
-        ))}
+      {user.role !== "2001" ? (
+        <Link to="/dashboard" className="admin-dashboard-btn">
+          <FontAwesomeIcon icon={faTachometerAlt} className="icon" />
+          Dashboard
+        </Link>
+      ) : (
+        <div>no</div>
+      )}
     </>
   );
 };
