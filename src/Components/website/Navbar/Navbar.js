@@ -32,19 +32,19 @@ const NavbarTest = () => {
   };
 
   // إغلاق القائمة عند الضغط خارجها
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        !event.target.closest(".profile-dropdown") &&
-        !event.target.closest(".profile-icon")
-      ) {
-        setIsProfileOpen(false);
-      }
-    };
+  // useEffect(() => {
+  //   const handleClickOutside = (event) => {
+  //     if (
+  //       !event.target.closest(".profile-dropdown") &&
+  //       !event.target.closest(".profile-icon")
+  //     ) {
+  //       setIsProfileOpen(false);
+  //     }
+  //   };
 
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, []);
+  //   document.addEventListener("click", handleClickOutside);
+  //   return () => document.removeEventListener("click", handleClickOutside);
+  // }, []);
 
   // Cookies
   const cookie = Cookie();
