@@ -27,6 +27,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    z-index: 123;
   }
   
   .admin-dashboard-btn:hover {
@@ -180,6 +181,30 @@
   .navbar-icons {
     display: flex;
     gap: 15px;
+  }
+  .appdiv{
+    position: relative;
+  }
+  .hovericon{
+    position: absolute;
+    top: 6px;
+    right: -21px;
+
+  }
+
+  .hoverdiv:hover .hovericon{
+    animation: move .7s forwards;
+    
+  }
+
+  @keyframes move {
+        0%{
+          right: -21px;
+        }
+        100%{
+          right: -120px;
+          display: none;
+        }
   }
   
   /* القائمة في الأجهزة الصغيرة */

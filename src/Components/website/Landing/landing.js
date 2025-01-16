@@ -1,32 +1,40 @@
-import { Container } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./landing.css";
 
 export default function Landing() {
   return (
-    <div className="d-flex align-items-center justify-content-between hand">
+    <div
+      className="landing-page"
+      style={{
+        minHeight: "90vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        textAlign: "center",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
       <Container>
-        <div className="col-md-6 col-12">
-          <h1
-            className="text-primary great-vibes-regular"
-            style={{ fontSize: "65px" }}
-          >
-            M&H Shop
-          </h1>
-          <h5 className="fw-normal text-light">
-            Welcome, we are honored to be your first choice. See what our
-            customers say, trust first. We serve you professionally and
-            honestly.
-          </h5>
-          <Link
-            to={"/shop"}
-            className="btn btn-primary mt-3 px-3 py-3 text-light fw-bold"
-          >
-            {" "}
-            Shop Now
-          </Link>
-        </div>
+        <h1 data-aos="fade-down" className="display-3 fw-bold">
+          Welcome to Our E-Commerce
+        </h1>
+        <p data-aos="fade-up" className="lead text-muted">
+          Discover the best deals and latest products just for you.
+        </p>
+        <Button
+          data-aos="zoom-in"
+          variant="primary"
+          size="lg"
+          className="mt-3"
+          href="/login"
+        >
+          Get Started
+        </Button>
       </Container>
+      <div className="wave bg-primary"></div>
     </div>
   );
 }

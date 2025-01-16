@@ -4,8 +4,13 @@ import { LATESTPRODUCTS } from "../../../Api/Api";
 import Product from "./product";
 import { Container } from "react-bootstrap";
 import SkeletonFun from "../../../Skeleton/Skeleton";
-import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleLeft,
+  faAngleRight,
+  faRightLong,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 
 export default function LatestSale() {
   let [products, setproducts] = useState([]);
@@ -16,7 +21,6 @@ export default function LatestSale() {
       .then((res) => setproducts(res.data))
       .finally(() => setloading(false));
   }, []);
-  console.log(products);
 
   let ShowData = products.map((item, index) => (
     <Product
@@ -51,7 +55,7 @@ export default function LatestSale() {
   }
 
   return (
-    <div className="bg-light">
+    <div className="bg-light overflow-hidden">
       <Container className="py-5 ">
         <div className="d-flex align-items-center justify-content-between  mb-5">
           <h1 className="">Deal of the day</h1>
@@ -97,6 +101,12 @@ export default function LatestSale() {
           ) : (
             ShowData
           )}
+        </div>
+        <div className="appdiv d-flex justify-content-end m-2 align-items-center">
+          <Link to="/products" className="text-decoration-none  hoverdiv">
+            <span>Show All Products </span>
+            <FontAwesomeIcon icon={faRightLong} className="hovericon " />
+          </Link>
         </div>
       </Container>
     </div>

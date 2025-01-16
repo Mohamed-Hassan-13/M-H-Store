@@ -1,40 +1,36 @@
 import { useEffect, useRef, useState } from "react";
 import { Axios } from "../../../Api/Axios";
-import { TOPRATED } from "../../../Api/Api";
-import Product from "./product";
+import { PRO } from "../../../Api/Api";
 import { Container } from "react-bootstrap";
-import SkeletonFun from "../../../Skeleton/Skeleton";
-import {
-  faAngleLeft,
-  faAngleRight,
-  faRightLong,
-} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import SkeletonFun from "../../../Skeleton/Skeleton";
+import Product from "../Products/product";
 
-export default function TopRated() {
+export default function Allproducts() {
   let [products, setproducts] = useState([]);
   let [loading, setloading] = useState(true);
 
   useEffect(() => {
-    Axios.get(`${TOPRATED}`)
+    Axios.get(`${PRO}`)
       .then((res) => setproducts(res.data))
       .finally(() => setloading(false));
   }, []);
 
-  let ShowData = products.map((item, index) => (
-    <Product
-      key={index}
-      title={item.title}
-      description={item.description}
-      image={item?.images[0]?.image}
-      rating={item.rating}
-      sale
-      price={item.price}
-      discount={item.discount}
-      id={item.id}
-    />
-  ));
+  let ShowData = products
+    .filter((item) => item.category)
+    .map((item, index) => (
+      <Product
+        key={index}
+        title={item.title}
+        description={item.description}
+        image={item?.images?.[0]?.image}
+        rating={item.rating}
+        price={item.price}
+        discount={item.discount}
+        id={item.id}
+      />
+    ));
 
   let divscroll = useRef(null);
   function toright() {
@@ -58,7 +54,7 @@ export default function TopRated() {
     <div className="bg-light overflow-hidden">
       <Container className="py-5 ">
         <div className="d-flex align-items-center justify-content-between  mb-5">
-          <h1 className="">Top Rated</h1>
+          <h1 className="">ِAll Products</h1>
           <div className="d-flex gap-2">
             <div
               style={{ width: "50px", height: "50px" }}
@@ -89,6 +85,7 @@ export default function TopRated() {
         <div
           className="d-flex align-items-stretch overflow-auto overflow-y-hidden scrool-primary "
           ref={divscroll}
+          style={{ scrollSnapType: "x mandatory" }}
         >
           {loading ? (
             <>
@@ -101,12 +98,6 @@ export default function TopRated() {
           ) : (
             ShowData
           )}
-        </div>
-        <div className="appdiv d-flex justify-content-end m-2 align-items-center">
-          <Link to="/products" className="text-decoration-none  hoverdiv">
-            <span>Show All Products </span>
-            <FontAwesomeIcon icon={faRightLong} className="hovericon " />
-          </Link>
         </div>
       </Container>
     </div>

@@ -1,5 +1,6 @@
 // Route
 import { Route, Routes } from "react-router-dom";
+
 // Public
 import Home from "./pages/Website/Homepage";
 import Login from "./pages/Website/Auth/AuthOperations/Login";
@@ -35,6 +36,7 @@ import ScrollToTop from "./Helpers/ScroolTop";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import Checkout from "./pages/Website/Checkout/checkout";
+import Allproducts from "./Components/website/Allproducts/allproducts";
 Aos.init();
 
 // App
@@ -48,6 +50,7 @@ function App() {
           <Route path="category" element={<WebsiteCategories />} />
           <Route path="product/:id" element={<ProductOnePage />} />
           <Route path="checkout" element={<Checkout />} />
+          <Route path="products" element={<Allproducts />} />
         </Route>
         {/* Public Route */}
         <Route element={<Requireback />}>
