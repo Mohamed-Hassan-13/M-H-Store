@@ -102,7 +102,7 @@ export default function LatestSale() {
             ShowData
           )}
         </div>
-        <div className="appdiv d-flex justify-content-end m-2 align-items-center">
+        <div className="appdiv d-flex justify-content-end m-2 align-items-center pe-2">
           <Link to="/products" className="text-decoration-none  hoverdiv">
             <span>Show All Products </span>
             <FontAwesomeIcon icon={faRightLong} className="hovericon " />
