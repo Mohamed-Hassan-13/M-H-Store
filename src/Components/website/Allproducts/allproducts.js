@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Axios } from "../../../Api/Axios";
 import { PRO } from "../../../Api/Api";
 import { Container } from "react-bootstrap";
@@ -6,10 +6,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import SkeletonFun from "../../../Skeleton/Skeleton";
 import Product from "../Products/product";
+import { theme } from "../../../Context/themContext";
 
 export default function Allproducts() {
   let [products, setproducts] = useState([]);
   let [loading, setloading] = useState(true);
+
+  // Context
+  const { Theme } = useContext(theme);
 
   useEffect(() => {
     Axios.get(`${PRO}`)
@@ -51,7 +55,13 @@ export default function Allproducts() {
   }
 
   return (
-    <div className="bg-light overflow-hidden">
+    <div
+      className={
+        Theme === "dark"
+          ? "bg-dark overflow-hidden text-white"
+          : "bg-light overflow-hidden"
+      }
+    >
       <Container className="py-5 ">
         <div className="d-flex align-items-center justify-content-between  mb-5">
           <h1 className="">ِAll Products</h1>

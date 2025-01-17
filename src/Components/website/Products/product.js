@@ -1,7 +1,9 @@
-import { faStar as solid } from "@fortawesome/free-solid-svg-icons";
+import { faCartPlus, faStar as solid } from "@fortawesome/free-solid-svg-icons";
 import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { theme } from "../../../Context/themContext";
 
 export default function Product(props) {
   let RoundStar = Math.round(props.rating);
@@ -13,6 +15,8 @@ export default function Product(props) {
     <FontAwesomeIcon key={index} icon={regularStar} color="black" />
   ));
 
+  const { Theme } = useContext(theme);
+
   return (
     <NavLink
       to={`/product/${props.id}`}
@@ -20,10 +24,24 @@ export default function Product(props) {
       className="col-lg-3 col-md-4 col-sm-6 col-12"
       data-aos="zoom-in-up"
     >
-      <div className=" rounded-2 border p-3 mx-1 h-100">
+      <div
+        className={
+          Theme === "dark"
+            ? " rounded-2 border p-3 mx-1 h-100 bg-dark text-light"
+            : " rounded-2 border p-3 mx-1 h-100 "
+        }
+      >
         <div>
           <p className="text-secondary text-truncate">{props.title}</p>
-          <p className="m-0 text-truncate text-black">{props.description}</p>
+          <p
+            className={
+              Theme === "dark"
+                ? "m-0 text-truncate text-white"
+                : "m-0 text-truncate text-black"
+            }
+          >
+            {props.description}
+          </p>
         </div>
         <div className="py-2">
           {props.sale && (
@@ -56,12 +74,14 @@ export default function Product(props) {
               </h6>
             </div>
           </div>
-          <div className="p-2 border border-black rounded-2 hover-cart">
-            <img
-              src={require("../../../Assets/shopping-cart.png")}
-              width={"20px"}
-              alt=""
-            />
+          <div
+            className={
+              Theme === "dark"
+                ? "p-2 border border-white rounded-2 hover-cart"
+                : "p-2 border border-black rounded-2 hover-cart"
+            }
+          >
+            <FontAwesomeIcon icon={faCartPlus} size="lg" />
           </div>
         </div>
       </div>

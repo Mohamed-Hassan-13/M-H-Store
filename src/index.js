@@ -18,18 +18,21 @@ import "./custom.css";
 import MenuContext from "./Context/MenuContext";
 import WindowContext from "./Context/WindowContext";
 import GetDataCartContext from "./Context/GetDataCartContext";
+import ThemContext from "./Context/themContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <GetDataCartContext>
-      <MenuContext>
-        <WindowContext>
-          <Router>
-            <App />
-          </Router>
-        </WindowContext>
-      </MenuContext>
-    </GetDataCartContext>
+    <ThemContext>
+      <GetDataCartContext>
+        <MenuContext>
+          <WindowContext>
+            <Router>
+              <App />
+            </Router>
+          </WindowContext>
+        </MenuContext>
+      </GetDataCartContext>
+    </ThemContext>
   </React.StrictMode>
 );

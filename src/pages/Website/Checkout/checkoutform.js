@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { theme } from "../../../Context/themContext";
 
 function PaymentPage() {
   const [isFakePaymentDone, setIsFakePaymentDone] = useState(false);
@@ -9,6 +10,9 @@ function PaymentPage() {
 
   const stripe = useStripe();
   const elements = useElements();
+
+  // Context
+  const { Theme } = useContext(theme);
 
   const handleFakePaymentSubmit = (event) => {
     event.preventDefault();
@@ -35,8 +39,15 @@ function PaymentPage() {
   };
 
   return (
-    <div className="container my-5">
-      <div className="card shadow-lg " style={{ maxWidth: "400px" }}>
+    <div className="container py-5">
+      <div
+        className={
+          Theme === "dark"
+            ? "card shadow-lg bg-dark text-white"
+            : "card shadow-lg bg-white text-black "
+        }
+        style={{ maxWidth: "400px" }}
+      >
         <div className="card-body">
           <h5 className="card-title text-center mb-4">
             {!isFakePaymentDone ? "Card Information" : "Payment Form"}
@@ -50,7 +61,16 @@ function PaymentPage() {
                 </label>
                 <input
                   type="text"
-                  className="form-control"
+                  className={
+                    Theme === "dark"
+                      ? "form-control text-white"
+                      : "form-control"
+                  }
+                  style={{
+                    backgroundColor: "transparent",
+                    Color: Theme === "dark" ? "white" : "black",
+                    borderColor: Theme === "dark" ? "white" : "black",
+                  }}
                   id="cardNumber"
                   placeholder="XXXX XXXX XXXX XXXX"
                   value={cardNumber}
@@ -67,6 +87,11 @@ function PaymentPage() {
                   <input
                     type="text"
                     className="form-control"
+                    style={{
+                      backgroundColor: "transparent",
+                      color: Theme === "dark" ? "white" : "black",
+                      borderColor: Theme === "dark" ? "white" : "black",
+                    }}
                     id="expiryDate"
                     placeholder="MM/YY"
                     value={expiryDate}
@@ -81,7 +106,12 @@ function PaymentPage() {
                   </label>
                   <input
                     type="text"
-                    className="form-control"
+                    className="form-control "
+                    style={{
+                      backgroundColor: "transparent",
+                      color: Theme === "dark" ? "white" : "black",
+                      borderColor: Theme === "dark" ? "white" : "black",
+                    }}
                     id="cvv"
                     placeholder="XXX"
                     value={cvv}
@@ -104,7 +134,7 @@ function PaymentPage() {
                     style: {
                       base: {
                         fontSize: "16px",
-                        color: "#424770",
+                        color: Theme === "dark" ? "white" : "#424770",
                         letterSpacing: "0.025em",
                         placeholder: {
                           color: "#aab7c4",

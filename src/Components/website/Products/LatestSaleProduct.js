@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Axios } from "../../../Api/Axios";
 import { LATESTPRODUCTS } from "../../../Api/Api";
 import Product from "./product";
@@ -11,10 +11,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
+import { theme } from "../../../Context/themContext";
 
 export default function LatestSale() {
   let [products, setproducts] = useState([]);
   let [loading, setloading] = useState(true);
+
+  // Context
+  const { Theme } = useContext(theme);
 
   useEffect(() => {
     Axios.get(`${LATESTPRODUCTS}`)
@@ -55,7 +59,13 @@ export default function LatestSale() {
   }
 
   return (
-    <div className="bg-light overflow-hidden">
+    <div
+      className={
+        Theme === "dark"
+          ? "bg-dark overflow-hidden text-white"
+          : "bg-light overflow-hidden"
+      }
+    >
       <Container className="py-5 ">
         <div className="d-flex align-items-center justify-content-between  mb-5">
           <h1 className="">Deal of the day</h1>

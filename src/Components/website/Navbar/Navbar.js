@@ -18,6 +18,7 @@ import PlusMinus from "../../btns/plusMinus";
 import { Button, Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import TransformDate from "../../../Helpers/TransformDate";
+import { theme } from "../../../Context/themContext";
 
 const NavbarTest = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -26,31 +27,29 @@ const NavbarTest = () => {
   const [show, setShow] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [loading, setloading] = useState(true);
+  const [themelocal, setThemelocal] = useState(
+    localStorage.getItem("theme") || "light"
+  );
 
   const toggleProfile = () => {
     setIsProfileOpen(!isProfileOpen);
   };
 
-  // إغلاق القائمة عند الضغط خارجها
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (
-  //       !event.target.closest(".profile-dropdown") &&
-  //       !event.target.closest(".profile-icon")
-  //     ) {
-  //       setIsProfileOpen(false);
-  //     }
-  //   };
-
-  //   document.addEventListener("click", handleClickOutside);
-  //   return () => document.removeEventListener("click", handleClickOutside);
-  // }, []);
+  function ChangeTheme() {
+    const newTheme = themelocal === "light" ? "dark" : "light";
+    setThemelocal(newTheme); // تحديث حالة الثيم
+    localStorage.setItem("theme", newTheme);
+  }
+  useEffect(() => {
+    setTheme(themelocal);
+  }, [themelocal]);
 
   // Cookies
   const cookie = Cookie();
   const tooken = cookie.get("ecoomerce");
 
   // Context
+  const { Theme, setTheme } = useContext(theme);
   const { GetDataCart, setGetDataCart } = useContext(Cart);
 
   // Logout
@@ -132,7 +131,11 @@ const NavbarTest = () => {
         <div className="col-sm-8 col-12">
           <h6 className="fw-bold">{item.title}</h6>
           <p
-            className="text-truncate m-0 text-muted"
+            className={
+              Theme === "dark"
+                ? "text-truncate m-0 text-white"
+                : "text-truncate m-0 text-muted"
+            }
             style={{ fontSize: "14px" }}
           >
             {item.description}
@@ -161,11 +164,16 @@ const NavbarTest = () => {
   return (
     <>
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header
+          className={Theme === "dark" ? "bg-dark text-white" : ""}
+          closeButton
+        >
           <Modal.Title>Cart</Modal.Title>
         </Modal.Header>
-        <Modal.Body>{ShowProductOnCart}</Modal.Body>
-        <Modal.Footer>
+        <Modal.Body className={Theme === "dark" ? "bg-dark text-white" : ""}>
+          {ShowProductOnCart}
+        </Modal.Body>
+        <Modal.Footer className={Theme === "dark" ? "bg-dark text-white" : ""}>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
@@ -174,7 +182,11 @@ const NavbarTest = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-      <nav className="custom-navbar">
+      <nav
+        className={
+          Theme === "dark" ? "bg-dark custom-navbar" : "bg-light custom-navbar"
+        }
+      >
         <div className="navbar-left">
           <div className="navbar-logo">
             {" "}
@@ -182,7 +194,7 @@ const NavbarTest = () => {
               <img
                 src={require("../../../Assets/Blue_and_White_Circle_Retail_Logo-removebg-preview.png")}
                 alt=""
-                width={"150px"}
+                width={"120px"}
               />
             </Link>
           </div>
@@ -193,74 +205,89 @@ const NavbarTest = () => {
           <a href="/">About</a>
           <a href="/">Contact</a>
         </div>
-        <div className="navbar-right">
-          {/* الأيقونات */}
-          <div className="navbar-icons">
-            <p className="mb-0 pointer" onClick={handleShow}>
-              <FontAwesomeIcon icon={faShoppingCart} className="icon" />
-              <span>({products.length})</span>
-            </p>
-            <div className="profile-container">
-              <FontAwesomeIcon
-                icon={faUser}
-                className="icon profile-icon"
-                onClick={toggleProfile}
-              />
-              {/* القائمة المنبثقة */}
-              {isProfileOpen ? (
-                tooken ? (
-                  loading ? (
-                    <div className="profile-dropdown">
-                      <p>Loading....</p>
-                    </div>
+        <div className="allright d-flex gap-1 gap-sm-4 gap-lg-5">
+          <div>
+            <Button variant="primary" onClick={ChangeTheme}>
+              Theme
+            </Button>
+          </div>
+          <div className="navbar-right">
+            {/* الأيقونات */}
+            <div className="navbar-icons">
+              <p className="mb-0 pointer" onClick={handleShow}>
+                <FontAwesomeIcon icon={faShoppingCart} className="icon" />
+                <span className={Theme === "dark" ? "text-white" : "text-dark"}>
+                  ({products.length})
+                </span>
+              </p>
+              <div className="profile-container">
+                <FontAwesomeIcon
+                  icon={faUser}
+                  className="icon profile-icon"
+                  onClick={toggleProfile}
+                />
+                {/* القائمة المنبثقة */}
+                {isProfileOpen ? (
+                  tooken ? (
+                    loading ? (
+                      <div className="profile-dropdown">
+                        <p>Loading....</p>
+                      </div>
+                    ) : (
+                      <div
+                        className={
+                          Theme === "dark"
+                            ? "profile-dropdown bg-dark text-white"
+                            : "profile-dropdown"
+                        }
+                      >
+                        <h5>
+                          {user.role === "1995"
+                            ? "Admin"
+                            : user.role === "1999"
+                            ? "Product Manger"
+                            : "User"}
+                        </h5>
+                        <p>
+                          <span className="text-primary me-1">Name:</span>
+                          {user.name}
+                        </p>
+                        <p>
+                          <span className="text-primary me-1">Email:</span>
+                          {user.email}
+                        </p>
+                        <p>
+                          <span className="text-primary me-1">Created At:</span>
+                          {TransformDate(user.created_at)}
+                        </p>
+                        <span className="logout" onClick={handleLogout}>
+                          Logout
+                        </span>
+                      </div>
+                    )
                   ) : (
                     <div className="profile-dropdown">
-                      <h5>
-                        {user.role === "1995"
-                          ? "Admin"
-                          : user.role === "1999"
-                          ? "Product Manger"
-                          : "User"}
-                      </h5>
-                      <p>
-                        <span className="text-primary me-1">Name:</span>
-                        {user.name}
-                      </p>
-                      <p>
-                        <span className="text-primary me-1">Email:</span>
-                        {user.email}
-                      </p>
-                      <p>
-                        <span className="text-primary me-1">Created At:</span>
-                        {TransformDate(user.created_at)}
-                      </p>
-                      <span className="logout" onClick={handleLogout}>
-                        Logout
-                      </span>
+                      <p>{user}</p>
                     </div>
                   )
                 ) : (
-                  <div className="profile-dropdown">
-                    <p>{user}</p>
-                  </div>
-                )
-              ) : (
-                ""
+                  ""
+                )}
+              </div>
+            </div>
+            {/* روابط تسجيل الدخول والتسجيل تظهر في الشاشات الكبيرة فقط */}
+            <div className="navbar-auth">
+              {!tooken && (
+                <>
+                  <a href="/login" className="auth-link">
+                    Login
+                  </a>
+                  <a href="/register" className="auth-link">
+                    Register
+                  </a>
+                </>
               )}
             </div>
-          </div>
-          {/* روابط تسجيل الدخول والتسجيل تظهر في الشاشات الكبيرة فقط */}
-          <div className="navbar-auth">
-            {!tooken && (
-              <>
-                <a href="/login" className="auth-link">
-                  Login
-                </a>
-                <a href="/register" className="auth-link">
-                  Register
-                </a>
-              </>
-            )}
           </div>
         </div>
         <button className="menu-toggle" onClick={toggleMenu}>

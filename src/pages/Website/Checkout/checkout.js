@@ -1,9 +1,10 @@
 import { Container } from "react-bootstrap";
 import "./checkout.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "./checkoutform";
+import { theme } from "../../../Context/themContext";
 
 const stripePromise = loadStripe(
   "pk_test_51QhpJ3H0u5fxYl4g5EBkEYm2JQU6lnCYmuwuSnSTQgIT44hh4Y99PB55B4l6vmMA4D3AIJuupXVJDTxz8ylWU5px00anyYRxD4"
@@ -21,6 +22,9 @@ export default function Checkout() {
     setproduct(productsWithQuantity);
   }, []);
 
+  // Context
+  const { Theme } = useContext(theme);
+
   const handleQuantityChange = (id, newQuantity) => {
     const count = Math.max(1, parseInt(newQuantity) || 1);
     setproduct((prevItems) =>
@@ -36,8 +40,12 @@ export default function Checkout() {
   };
 
   return (
-    <>
-      <div className="px-5 py-4">
+    <div
+      className={
+        Theme === "dark" ? "bg-dark text-white" : "bg-white text-black"
+      }
+    >
+      <div className="px-5 py-4 ">
         <header className=" box-shadow">
           <Container>
             <div className=" py-3 justify-content-around align-items-center d-flex flex-wrap">
@@ -81,7 +89,14 @@ export default function Checkout() {
               <div className="col-md-3 col-6 justify-content-center d-flex">
                 <input
                   type="number"
-                  className="inp-number"
+                  className="inp-number border "
+                  style={{
+                    backgroundColor: "transparent",
+                    border: "none",
+                    fontSize: "16px",
+                    color: Theme === "dark" ? "white" : "black",
+                    borderColor: Theme === "dark" ? "white" : "black",
+                  }}
                   max={item.stock}
                   value={item.count}
                   onChange={(e) => {
@@ -99,6 +114,6 @@ export default function Checkout() {
       <Elements stripe={stripePromise}>
         <CheckoutForm />
       </Elements>
-    </>
+    </div>
   );
 }

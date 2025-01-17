@@ -81,7 +81,6 @@
   
   .profile-dropdown p {
     margin: 5px 0;
-    color: #333;
     font-size: 0.9rem;
   }
   
@@ -260,7 +259,6 @@
   
     .navbar-right {
         display: flex; 
-        width: 40%;
         gap: 10px;
       }
     
@@ -270,7 +268,7 @@
       }
       
       .navbar-icons a {
-        font-size: 1.5rem; /* حجم الأيقونات في الشاشات الصغيرة */
+        font-size: 1.5rem;
       }
       
       .menu-toggle {

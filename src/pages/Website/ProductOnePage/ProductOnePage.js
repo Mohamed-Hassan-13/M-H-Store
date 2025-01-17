@@ -5,11 +5,12 @@ import { CART, PROD } from "../../../Api/Api";
 import { Container, Toast } from "react-bootstrap";
 import ImageGallery from "react-image-gallery";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar as solid } from "@fortawesome/free-solid-svg-icons";
+import { faCartPlus, faStar as solid } from "@fortawesome/free-solid-svg-icons";
 import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
 import SkeletonFun from "../../../Skeleton/Skeleton";
 import { Cart } from "../../../Context/GetDataCartContext";
 import PlusMinus from "../../../Components/btns/plusMinus";
+import { theme } from "../../../Context/themContext";
 
 export default function ProductOnePage() {
   let [product, setproduct] = useState();
@@ -28,6 +29,9 @@ export default function ProductOnePage() {
       setShowToast(false);
     }, 3000);
   };
+
+  // Context
+  const { Theme } = useContext(theme);
 
   let { id } = useParams();
 
@@ -184,104 +188,114 @@ export default function ProductOnePage() {
           </p>
         </Toast.Body>
       </Toast>
-      <Container>
-        {/* SkeletonFun */}
-        <div className="d-flex justify-align-content-between flex-wrap py-4">
-          {loading ? (
-            <>
-              <div className=" col-md-6 col-12">
-                <SkeletonFun count={1} classs={"col-12"} height={"250px"} />
-                <div className=" col-12 d-flex mt-1">
-                  <SkeletonFun count={1} classs={"col-4"} height={"100px"} />
-                  <SkeletonFun count={1} classs={"col-4"} height={"100px"} />
-                  <SkeletonFun count={1} classs={"col-4"} height={"100px"} />
+      <div
+        className={
+          Theme === "dark" ? "bg-dark text-white" : "bg-white text-dark"
+        }
+      >
+        <Container>
+          {/* SkeletonFun */}
+          <div className="d-flex justify-align-content-between flex-wrap py-4">
+            {loading ? (
+              <>
+                <div className=" col-md-6 col-12">
+                  <SkeletonFun count={1} classs={"col-12"} height={"250px"} />
+                  <div className=" col-12 d-flex mt-1">
+                    <SkeletonFun count={1} classs={"col-4"} height={"100px"} />
+                    <SkeletonFun count={1} classs={"col-4"} height={"100px"} />
+                    <SkeletonFun count={1} classs={"col-4"} height={"100px"} />
+                  </div>
                 </div>
-              </div>
-              <div className="col-md-6 col-12">
-                <SkeletonFun count={1} classs={"col-12"} height={"40px"} />
-                <SkeletonFun count={1} classs={"col-12"} height={"10px"} />
-                <SkeletonFun count={1} classs={"col-12"} height={"90px"} />
-                <SkeletonFun count={1} classs={"col-12"} height={"3px"} />
-                <SkeletonFun count={1} classs={"col-12"} height={"60px"} />
-              </div>
-            </>
-          ) : (
-            <>
-              {/* ImageGallery */}
-              <div className="col-md-6 col-12 ">
-                <div className="me-md-3">
-                  <ImageGallery
-                    items={productImages}
-                    additionalClass={"image"}
-                  />
+                <div className="col-md-6 col-12">
+                  <SkeletonFun count={1} classs={"col-12"} height={"40px"} />
+                  <SkeletonFun count={1} classs={"col-12"} height={"10px"} />
+                  <SkeletonFun count={1} classs={"col-12"} height={"90px"} />
+                  <SkeletonFun count={1} classs={"col-12"} height={"3px"} />
+                  <SkeletonFun count={1} classs={"col-12"} height={"60px"} />
                 </div>
-              </div>
-              <div className="col-md-6 col-12 ">
-                <div className="ms-md-3">
-                  <div>
-                    <h1 className="mb-1 fw-bolder">{product.title}</h1>
+              </>
+            ) : (
+              <>
+                {/* ImageGallery */}
+                <div className="col-md-6 col-12 ">
+                  <div className="me-md-3">
+                    <ImageGallery
+                      items={productImages}
+                      additionalClass={"image"}
+                    />
                   </div>
-                  <div>
-                    <p
-                      className="text-muted mb-2 "
-                      style={{ fontSize: "13px" }}
-                    >
-                      {product.About}
-                    </p>
-                  </div>
-
-                  <div className="border-bottom">
-                    <h5>{product.description}</h5>
-                  </div>
-                  <div>
-                    {product.stock === 1 && (
-                      <p className="text-danger">There is Only 1 Left</p>
-                    )}
-                  </div>
-                  <div className="mt-4">
-                    {ShowGoldStars}
-                    {ShowEmptyStars}
-                  </div>
-                  <div className="d-flex align-items-center flex-wrap row-gap-2 ">
-                    <div className="d-flex align-items-center gap-2 col-lg-6 col-sm-4 col-12">
-                      <p className="text-primary fw-bolder m-0">
-                        {product.price}$
-                      </p>
-                      <p className=" text-secondary text-decoration-line-through m-0">
-                        {Math.floor(
-                          product.price / (1 - product.discount / 100)
-                        )}
-                        $
+                </div>
+                <div className="col-md-6 col-12 ">
+                  <div className="ms-md-3">
+                    <div>
+                      <h1 className="mb-1 fw-bolder">{product.title}</h1>
+                    </div>
+                    <div>
+                      <p
+                        className="text-muted mb-2 "
+                        style={{ fontSize: "13px" }}
+                      >
+                        {product.About}
                       </p>
                     </div>
-                    {product.stock === 0 ? (
-                      <div className="col-lg-6 col-sm-8 col-12 fw-bold fs-5">
-                        The Product is Unavilable
-                      </div>
-                    ) : (
-                      <div className="d-flex align-items-center justify-content-sm-end col-lg-6 col-sm-8 col-12 gap-3">
-                        <PlusMinus setcount={(data) => setcount(data)} />
-                        <div className="p-2 border border-black rounded-2 hover-cart pointer">
-                          {LoadingCart ? (
-                            "Loading"
-                          ) : (
-                            <img
-                              onClick={HandleSave}
-                              src={require("../../../Assets/shopping-cart.png")}
-                              width={"20px"}
-                              alt=""
-                            />
+
+                    <div className="border-bottom">
+                      <h5>{product.description}</h5>
+                    </div>
+                    <div>
+                      {product.stock === 1 && (
+                        <p className="text-danger">There is Only 1 Left</p>
+                      )}
+                    </div>
+                    <div className="mt-4">
+                      {ShowGoldStars}
+                      {ShowEmptyStars}
+                    </div>
+                    <div className="d-flex align-items-center flex-wrap row-gap-2 ">
+                      <div className="d-flex align-items-center gap-2 col-lg-6 col-sm-4 col-12">
+                        <p className="text-primary fw-bolder m-0">
+                          {product.price}$
+                        </p>
+                        <p className=" text-secondary text-decoration-line-through m-0">
+                          {Math.floor(
+                            product.price / (1 - product.discount / 100)
                           )}
-                        </div>
+                          $
+                        </p>
                       </div>
-                    )}
+                      {product.stock === 0 ? (
+                        <div className="col-lg-6 col-sm-8 col-12 fw-bold fs-5">
+                          The Product is Unavilable
+                        </div>
+                      ) : (
+                        <div className="d-flex align-items-center justify-content-sm-end col-lg-6 col-sm-8 col-12 gap-3">
+                          <PlusMinus setcount={(data) => setcount(data)} />
+                          <div
+                            className="p-2 border rounded-2 hover-cart pointer"
+                            style={{
+                              borderColor: Theme === "dark" ? "white" : "dark",
+                            }}
+                          >
+                            {LoadingCart ? (
+                              "Loading"
+                            ) : (
+                              <FontAwesomeIcon
+                                onClick={HandleSave}
+                                icon={faCartPlus}
+                                size="lg"
+                              />
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </>
-          )}
-        </div>
-      </Container>
+              </>
+            )}
+          </div>
+        </Container>
+      </div>
     </>
   );
 }

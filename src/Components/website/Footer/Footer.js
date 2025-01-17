@@ -1,9 +1,19 @@
+import { useContext } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { theme } from "../../../Context/themContext";
 
 export default function Footer() {
+  const { Theme } = useContext(theme);
+
   return (
-    <footer className="py-3 " style={{ backgroundColor: "rgb(209 213 219)" }}>
+    <footer
+      className="py-3 "
+      style={{
+        backgroundColor: Theme === "dark" ? "#79787dfc" : "rgb(209 213 219)",
+        color: Theme === "dark" ? "white" : "black",
+      }}
+    >
       <Container>
         <div className="row mx-0 gap-md-0 gap-2">
           <div className="col-md-4 col-12 ">
@@ -28,23 +38,47 @@ export default function Footer() {
                 className="m-0 p-0 mt-md-3 mt-1"
                 style={{ listStyle: "none" }}
               >
-                <li className=" text-hover mb-2">
-                  <Link to="#" className="hover-muted">
+                <li className={"mb-2"}>
+                  <Link
+                    to="#"
+                    style={{
+                      color:
+                        Theme === "dark" ? "white" : "rgba(33, 37, 41, 0.75)",
+                    }}
+                  >
                     Home
                   </Link>
                 </li>
                 <li className=" mb-2 ">
-                  <Link to="#" className="hover-muted">
+                  <Link
+                    to="#"
+                    style={{
+                      color:
+                        Theme === "dark" ? "white" : "rgba(33, 37, 41, 0.75)",
+                    }}
+                  >
                     Shop
                   </Link>
                 </li>
                 <li className=" mb-2">
-                  <Link to="#" className="hover-muted">
+                  <Link
+                    to="#"
+                    style={{
+                      color:
+                        Theme === "dark" ? "white" : "rgba(33, 37, 41, 0.75)",
+                    }}
+                  >
                     Contact
                   </Link>
                 </li>
                 <li className=" mb-2">
-                  <Link to="#" className="hover-muted">
+                  <Link
+                    to="#"
+                    style={{
+                      color:
+                        Theme === "dark" ? "white" : "rgba(33, 37, 41, 0.75)",
+                    }}
+                  >
                     About
                   </Link>
                 </li>
